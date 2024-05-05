@@ -2,6 +2,8 @@
 
 namespace TaskBySibers.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class CRUDEmployeeController : Controller
     {
         [HttpGet("GetEmployee")]

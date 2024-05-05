@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskBySibers.Data.Context;
 
@@ -11,9 +12,11 @@ using TaskBySibers.Data.Context;
 namespace TaskBySibers.Migrations
 {
     [DbContext(typeof(MSSQLContext))]
-    partial class MSSQLContextModelSnapshot : ModelSnapshot
+    [Migration("20240505061953_FirstMig")]
+    partial class FirstMig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

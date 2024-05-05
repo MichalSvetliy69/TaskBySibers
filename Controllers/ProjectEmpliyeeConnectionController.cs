@@ -10,6 +10,21 @@ namespace TaskBySibers.Controllers
         /// and several people can work on one project)
         /// </summary>
         /// <returns></returns>
+        /// 
+
+        [HttpGet("GetEmployeesByProject")]
+        public async Task<IActionResult> GetEmployeesByProject(int ProjectId)
+        {
+            try
+            {
+                return Ok($"Succssful complete!");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
         [HttpPost("AddEmployeeByProject")]
         public async Task<IActionResult> AddEmployeeByProject(int ProjectId)
         {

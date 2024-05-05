@@ -1,27 +1,28 @@
 ﻿using AutoMapper;
-using TaskBySibers.Data.Context;
 using TaskBySibers.Models;
 using TaskBySibers.Repository.Implementation;
-using TaskBySibers.Repository.Interfaces;
 using TaskBySibers.Services.interfaces;
+using TaskBySibers.ViewModels;
 using TaskBySibers.ViewModels.ProjectVM;
 
-namespace TaskBySibers.Services
+namespace TaskBySibers.Services.Implementation
 {
-    public class CRUDProjectService : ICRUDProjectService
+    public class CRUDEmployeeService : ICRUDEmployeeService
     {
-        private BaseRepository<Project> _repository;
+        private BaseRepository<Employee> _repository;
         private readonly IMapper _mapper;
-        public CRUDProjectService(BaseRepository<Project> repository, IMapper mapper)
+
+        public CRUDEmployeeService(BaseRepository<Employee> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
-        public string AddProject(ProjectVM projectVM)
+
+        public string AddEmployee(EmployeeVM employeeVM)
         {
             try
             {
-                _repository.Create(_mapper.Map<Project>(projectVM));
+                _repository.Create(_mapper.Map<Employee>(employeeVM));
                 return "Successfull added!";
             }
             catch (Exception)
@@ -30,11 +31,11 @@ namespace TaskBySibers.Services
             }
         }
 
-        public string DeleteProject(int projectId)
+        public string DeleteEmployee(int employeeId)
         {
             try
             {
-                _repository.Delete(projectId);
+                _repository.Delete(employeeId);
                 return "Successfull deleted!";
             }
             catch (Exception)
@@ -43,11 +44,11 @@ namespace TaskBySibers.Services
             }
         }
 
-        public List<ProjectVM> GetAllProjects()
+        public List<EmployeeVM> GetAllEmployees()
         {
             try
             {
-                return (_mapper.Map<List<ProjectVM>>(_repository.GetAll()));
+                return (_mapper.Map<List<EmployeeVM>>(_repository.GetAll()));
             }
             catch (Exception)
             {
@@ -55,11 +56,11 @@ namespace TaskBySibers.Services
             }
         }
 
-        public ProjectVM GetProject(int projectId)
+        public EmployeeVM GetEmployee(int employeeId)
         {
             try
-            { 
-                return (_mapper.Map<ProjectVM>(_repository.Get(projectId)));
+            {
+                return (_mapper.Map<EmployeeVM>(_repository.Get(employeeId)));
             }
             catch (Exception)
             {
@@ -67,11 +68,11 @@ namespace TaskBySibers.Services
             }
         }
 
-        public string UpdateProject(ProjectVM project)
+        public string UpdateEmployee(EmployeeVM employeeVM)
         {
             try
             {
-                _repository.Update(_mapper.Map<Project>(project));
+                _repository.Update(_mapper.Map<Employee>(employeeVM));
                 return "Successful update!";
             }
             catch (Exception)

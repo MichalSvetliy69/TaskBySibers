@@ -11,6 +11,6 @@ namespace TaskBySibers.ViewModels.ProjectVM
         public DateTime? StartProjectDate { get; set; }
         public DateTime? EndProjectDate { get; set; }
         public int ProjectPriority { get; set; }
-        public Employee TeamLead { get; set; } //project manager
+        public int TeamLeadId { get; set; } //project manager
     }
 }
