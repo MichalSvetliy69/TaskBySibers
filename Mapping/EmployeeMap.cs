@@ -11,8 +11,6 @@ namespace TaskBySibers.Mapping
         {
             CreateMap<Employee, EmployeeVM>();
             CreateMap<EmployeeVM, Employee>();
-            CreateMap<List<Employee>, List<Employee>>();
-            CreateMap<List<Employee>, List<Employee>>();
         }
     }
 }

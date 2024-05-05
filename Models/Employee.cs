@@ -6,7 +6,6 @@
         public string? LastName { get; set; }
         public string? SurName { get; set; }
         public string? Email { get; set; }
-        public string? EmployeeStatus { get; set; }
         public virtual ICollection<ProjectEmployee> ProjectEmployees { get; set; }
         public Employee()
         {

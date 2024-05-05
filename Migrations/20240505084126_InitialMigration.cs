@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TaskBySibers.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMig : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,8 +20,7 @@ namespace TaskBySibers.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SurName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmployeeStatus = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,7 +39,7 @@ namespace TaskBySibers.Migrations
                     StartProjectDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     EndProjectDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ProjectPriority = table.Column<int>(type: "int", nullable: false),
-                    TeamLeadId = table.Column<int>(type: "int", nullable: false)
+                    TeamLeadId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -49,8 +48,7 @@ namespace TaskBySibers.Migrations
                         name: "FK_Projects_Employees_TeamLeadId",
                         column: x => x.TeamLeadId,
                         principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(

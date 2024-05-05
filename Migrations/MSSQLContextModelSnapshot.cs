@@ -33,9 +33,6 @@ namespace TaskBySibers.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("EmployeeStatus")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
@@ -76,7 +73,7 @@ namespace TaskBySibers.Migrations
                     b.Property<DateTime?>("StartProjectDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TeamLeadId")
+                    b.Property<int?>("TeamLeadId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -105,9 +102,7 @@ namespace TaskBySibers.Migrations
                 {
                     b.HasOne("TaskBySibers.Models.Employee", "TeamLead")
                         .WithMany()
-                        .HasForeignKey("TeamLeadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TeamLeadId");
 
                     b.Navigation("TeamLead");
                 });

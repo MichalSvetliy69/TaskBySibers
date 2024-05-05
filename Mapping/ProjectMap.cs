@@ -10,8 +10,8 @@ namespace TaskBySibers.Mapping
         {
             CreateMap<Project, ProjectVM>(); 
             CreateMap<ProjectVM, Project>();
-            CreateMap<List<Project>, List<ProjectVM>>();
-            CreateMap<List<ProjectVM>, List<Project>>();
+            //CreateMap<List<Project>, List<ProjectVM>>();
+            //CreateMap<List<ProjectVM>, List<Project>>();
         }
     }
 }

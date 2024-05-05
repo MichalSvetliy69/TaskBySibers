@@ -36,10 +36,10 @@ namespace TaskBySibers.Repository.Implementation
             var toUpdate = Context.Set<TDbModel>().FirstOrDefault(m => m.Id == model.Id);
             if (toUpdate != null)
             {
-                toUpdate = model;
+                Context.Entry(toUpdate).CurrentValues.SetValues(model);
+                Context.SaveChanges();
             }
-            Context.Update(toUpdate);
-            Context.SaveChanges();
+            
             return toUpdate;
         }
 
