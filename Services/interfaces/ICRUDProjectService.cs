@@ -7,7 +7,7 @@ namespace TaskBySibers.Services.interfaces
     {
         ProjectVM GetProject(int projectId);
         List<ProjectVM> GetAllProjects();
-        string AddProject (ProjectVM project);
+        string AddProjectAsync (ProjectVM project);
         string UpdateProject (ProjectVM project);
         string DeleteProject (int projectId);
 

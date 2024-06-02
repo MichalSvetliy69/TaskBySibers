@@ -2,11 +2,12 @@
 using TaskBySibers.Models;
 using TaskBySibers.Repository.Interfaces;
 
+
 namespace TaskBySibers.Repository.Implementation
 {
     public class BaseRepository<TDbModel> : IBaseRepository<TDbModel> where TDbModel : BaseModel
     {
-        private MSSQLContext Context { get; set; }
+        protected MSSQLContext Context { get; set; }
         public BaseRepository(MSSQLContext context)
         {
             Context = context;

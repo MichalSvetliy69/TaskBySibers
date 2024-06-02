@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using TaskBySibers.Data.Context;
 using TaskBySibers.Models;
 using TaskBySibers.Repository.Implementation;
 using TaskBySibers.Repository.Interfaces;
 using TaskBySibers.Services.interfaces;
+using TaskBySibers.Validation;
 using TaskBySibers.ViewModels.ProjectVM;
 
 namespace TaskBySibers.Services
@@ -12,16 +14,24 @@ namespace TaskBySibers.Services
     {
         private BaseRepository<Project> _repository;
         private readonly IMapper _mapper;
+        private DataValidator<Project> _projectValidator;
         public CRUDProjectService(BaseRepository<Project> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
+            _projectValidator = new DataValidator<Project>();
         }
-        public string AddProject(ProjectVM projectVM)
+        public string AddProjectAsync(ProjectVM projectVM)
         {
             try
             {
-                _repository.Create(_mapper.Map<Project>(projectVM));
+                Project project = _mapper.Map<Project>(projectVM);
+                var ValidResult = _projectValidator.Validate(project);
+                if (!ValidResult.IsValid)
+                {
+                    return null;
+                }
+                _repository.Create(project);
                 return "Successfull added!";
             }
             catch (Exception)
@@ -67,11 +77,18 @@ namespace TaskBySibers.Services
             }
         }
 
-        public string UpdateProject(ProjectVM project)
+        public string UpdateProject(ProjectVM projectVM)
         {
             try
             {
-                _repository.Update(_mapper.Map<Project>(project));
+
+                Project project = _mapper.Map<Project>(projectVM);
+                var ValidResult = _projectValidator.Validate(project);
+                if (!ValidResult.IsValid)
+                {
+                    return null;
+                }
+                _repository.Update(project);
                 return "Successful update!";
             }
             catch (Exception)

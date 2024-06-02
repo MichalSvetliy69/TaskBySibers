@@ -2,10 +2,12 @@
 using Microsoft.EntityFrameworkCore.SqlServer;
 using TaskBySibers.Models;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace TaskBySibers.Data.Context
 {
-    public class MSSQLContext : DbContext
+    public class MSSQLContext : IdentityDbContext<User>
     {
         public MSSQLContext(DbContextOptions options) : base(options)
         {
@@ -14,6 +16,11 @@ namespace TaskBySibers.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<IdentityUserRole<string>>().HasKey(p => new { p.UserId, p.RoleId });
+
+
             modelBuilder.Entity<ProjectEmployee>()
                 .HasKey(bc => new { bc.ProjectId, bc.EmployeeId });
 

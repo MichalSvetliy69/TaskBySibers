@@ -46,7 +46,7 @@ namespace TaskBySibers.Controllers
         {
             try
             {
-                _CRUDProjectService.AddProject(projectVM);
+                _CRUDProjectService.AddProjectAsync(projectVM);
                 return Ok($"Succssful complete!");
             }
             catch (Exception ex)

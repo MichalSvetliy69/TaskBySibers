@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TaskBySibers.Services.Implementation;
+using TaskBySibers.Services.interfaces;
+using TaskBySibers.ViewModels;
 
 namespace TaskBySibers.Controllers
 {
@@ -11,13 +14,18 @@ namespace TaskBySibers.Controllers
         /// </summary>
         /// <returns></returns>
         /// 
+        private readonly IProjectEmpliyeeConnectionService _projectEmpliyeeConnectionService;
+        public ProjectEmpliyeeConnectionController(IProjectEmpliyeeConnectionService projectEmpliyeeConnectionService)
+        {
+            _projectEmpliyeeConnectionService = projectEmpliyeeConnectionService;
+        }
 
         [HttpGet("GetEmployeesByProject")]
         public async Task<IActionResult> GetEmployeesByProject(int ProjectId)
         {
             try
             {
-                return Ok($"Succssful complete!");
+                return Ok(_projectEmpliyeeConnectionService.GetAllEmployeesByProject(ProjectId));
             }
             catch (Exception ex)
             {
@@ -26,11 +34,11 @@ namespace TaskBySibers.Controllers
         }
 
         [HttpPost("AddEmployeeByProject")]
-        public async Task<IActionResult> AddEmployeeByProject(int ProjectId)
+        public async Task<IActionResult> AddEmployeeByProject(ProjectEmployeeVM projectEmployeeVM)
         {
             try
             {
-                return Ok($"Succssful complete!");
+                return Ok(_projectEmpliyeeConnectionService.AddEmployeeByProject(projectEmployeeVM));
             }
             catch (Exception ex)
             {
@@ -39,11 +47,11 @@ namespace TaskBySibers.Controllers
         }
 
         [HttpPost("DeleteEmployeeByProject")]
-        public async Task<IActionResult> DeleteEmployeeByProject(int ProjectId)
+        public async Task<IActionResult> DeleteEmployeeByProject(ProjectEmployeeVM projectEmployeeVM)
         {
             try
             {
-                return Ok($"Succssful complete!");
+                return Ok(_projectEmpliyeeConnectionService.DeleteEmployeeByProject(projectEmployeeVM));
             }
             catch (Exception ex)
             {
@@ -51,17 +59,6 @@ namespace TaskBySibers.Controllers
             }
         }
 
-        [HttpPost("ToIdentifyANewLeadByProject")]
-        public async Task<IActionResult> ToIdentifyANewLeadByProject(int ProjectId)
-        {
-            try
-            {
-                return Ok($"Succssful complete!");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
+
     }
 }

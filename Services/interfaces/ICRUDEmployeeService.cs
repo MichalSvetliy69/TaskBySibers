@@ -5,8 +5,9 @@ namespace TaskBySibers.Services.interfaces
 {
     public interface ICRUDEmployeeService
     {
-        EmployeeVM GetEmployee(int projectId);
+        EmployeeVM GetEmployee(int employeeId);
         List<EmployeeVM> GetAllEmployees();
+        List<EmployeeVM> GetAllEmployeesByProject(int projectId);
         string AddEmployee(EmployeeVM employeeVM);
         string UpdateEmployee(EmployeeVM employeeVM);
         string DeleteEmployee(int employeeId);

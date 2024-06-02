@@ -1,7 +1,12 @@
 ﻿using AutoMapper;
+using FluentValidation;
+using Microsoft.EntityFrameworkCore;
+using TaskBySibers.Data.Context;
 using TaskBySibers.Models;
 using TaskBySibers.Repository.Implementation;
+using TaskBySibers.Repository.Interfaces;
 using TaskBySibers.Services.interfaces;
+using TaskBySibers.Validation;
 using TaskBySibers.ViewModels;
 using TaskBySibers.ViewModels.ProjectVM;
 
@@ -9,20 +14,31 @@ namespace TaskBySibers.Services.Implementation
 {
     public class CRUDEmployeeService : ICRUDEmployeeService
     {
-        private BaseRepository<Employee> _repository;
+        private IEmployeeRepository _repository;
         private readonly IMapper _mapper;
-
-        public CRUDEmployeeService(BaseRepository<Employee> repository, IMapper mapper)
+        private DataValidator<Employee> _projectValidator;
+        private MSSQLContext _context;
+        IRepositoryManager _repositoryManager;
+        public CRUDEmployeeService(IMapper mapper, MSSQLContext context, IRepositoryManager repositoryManager) //
         {
-            _repository = repository;
+            //_repository = repository;
             _mapper = mapper;
+            _projectValidator = new DataValidator<Employee>();
+            _context = context;
+            _repositoryManager = repositoryManager;
         }
 
         public string AddEmployee(EmployeeVM employeeVM)
         {
             try
             {
-                _repository.Create(_mapper.Map<Employee>(employeeVM));
+                Employee employee = _mapper.Map<Employee>(employeeVM);
+                var ValidResult = _projectValidator.Validate(employee);
+                if (!ValidResult.IsValid)
+                {
+                    return null;
+                }
+                _repositoryManager.EmployeeRepository.Create(employee);
                 return "Successfull added!";
             }
             catch (Exception)
@@ -35,7 +51,7 @@ namespace TaskBySibers.Services.Implementation
         {
             try
             {
-                _repository.Delete(employeeId);
+                _repositoryManager.EmployeeRepository.Delete(employeeId);
                 return "Successfull deleted!";
             }
             catch (Exception)
@@ -48,7 +64,8 @@ namespace TaskBySibers.Services.Implementation
         {
             try
             {
-                return (_mapper.Map<List<EmployeeVM>>(_repository.GetAll()));
+                
+                return (_mapper.Map<List<EmployeeVM>>(_repositoryManager.EmployeeRepository.GetAll()));
             }
             catch (Exception)
             {
@@ -60,7 +77,7 @@ namespace TaskBySibers.Services.Implementation
         {
             try
             {
-                return (_mapper.Map<EmployeeVM>(_repository.Get(employeeId)));
+                return (_mapper.Map<EmployeeVM>(_repositoryManager.EmployeeRepository.Get(employeeId)));
             }
             catch (Exception)
             {
@@ -72,7 +89,13 @@ namespace TaskBySibers.Services.Implementation
         {
             try
             {
-                _repository.Update(_mapper.Map<Employee>(employeeVM));
+                Employee employee = _mapper.Map<Employee>(employeeVM);
+                var ValidResult = _projectValidator.Validate(employee);
+                if (!ValidResult.IsValid)
+                {
+                    return null;
+                }
+                _repositoryManager.EmployeeRepository.Update(employee);
                 return "Successful update!";
             }
             catch (Exception)
@@ -80,5 +103,19 @@ namespace TaskBySibers.Services.Implementation
                 return null;
             }
         }
+
+        public List<EmployeeVM> GetAllEmployeesByProject(int projectId)
+        {
+            try
+            {
+
+                return (_mapper.Map<List<EmployeeVM>>(_repositoryManager.EmployeeRepository.GetAll()));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+            
     }
 }
